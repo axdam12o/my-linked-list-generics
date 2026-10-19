@@ -98,7 +98,7 @@ public class MyLinkedList<T>
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
-        for (Node node = Head; node != null; node = node.Next)
+        for (Node<T> node = Head; node != null; node = node.Next)
         {
             sb.AppendLine(node.Data.ToString());
         }
