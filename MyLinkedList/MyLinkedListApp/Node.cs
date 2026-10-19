@@ -6,7 +6,7 @@ public class Node<T>
 
     public Node<T> Prev { get; set; }
     public Node<T> Next { get; set; }
-    public Book Data { get; }
+    public T Data { get; }
 
     #endregion
 
