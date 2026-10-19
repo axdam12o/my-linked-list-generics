@@ -4,7 +4,7 @@ namespace MyLinkedListApp;
 
 public class MyLinkedList<T>
 {
-    #region Properties
+    
 
     private Node<T> Head { get; set; }
     private Node<T> Tail { get; set; }
@@ -15,7 +15,7 @@ public class MyLinkedList<T>
         {
             int cnt = 0;
 
-            for (Node node = Head; node != null; node = node.Next)
+            for (Node<T> node = Head; node != null; node = node.Next)
             {
                 cnt++;
             }
@@ -24,37 +24,27 @@ public class MyLinkedList<T>
         }
     }
 
-    #endregion
-
-    #region Insert Methods
-
-    public void AddAtStart(Book book)
+    public void AddAtStart(T data)
     {
-        InsertAt(0, book);
+        InsertAt(0, data);
     }
 
-    public void AddAtEnd(Book book)
+    public void AddAtEnd(T data)
     {
-        InsertAt(Count, book);
+        InsertAt(Count, data);
     }
 
-    public void InsertAt(int index, Book book)
+    public void InsertAt(int index, T data)
     {
-        if (book == null)
-        {
-            throw new ArgumentNullException(nameof(book), "Invalid Parameter");
-        }
-
         int count = Count;
 
         if (index < 0 || index > count)
         {
-            throw new ArgumentOutOfRangeException(nameof(index), "Index out of range.");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
-        Node newNode = new Node(book);
+        Node<T> newNode = new Node<T>(data);
 
-        // Case 1: List is empty
         if (Head == null)
         {
             Head = newNode;
@@ -62,7 +52,6 @@ public class MyLinkedList<T>
             return;
         }
 
-        // Case 2: Insert at the start
         if (index == 0)
         {
             newNode.Next = Head;
@@ -71,7 +60,6 @@ public class MyLinkedList<T>
             return;
         }
 
-        // Case 3: Insert at the end
         if (index == count)
         {
             Tail.Next = newNode;
@@ -80,8 +68,7 @@ public class MyLinkedList<T>
             return;
         }
 
-        // Case 4: Insert in the middle (before the node currently at index)
-        Node current = GetNodeAt(index);
+        Node<T> current = GetNodeAt(index);
 
         newNode.Prev = current.Prev;
         newNode.Next = current;
@@ -89,90 +76,10 @@ public class MyLinkedList<T>
         current.Prev = newNode;
     }
 
-    #endregion
-
-    #region Remove Methods
-
-    public Book RemoveFirst()
+    private Node<T> GetNodeAt(int index)
     {
-        return RemoveAt(0);
-    }
+        Node<T> current = Head;
 
-    public Book RemoveLast()
-    {
-        return RemoveAt(Count - 1);
-    }
-
-    public Book RemoveAt(int index)
-    {
-        int count = Count;
-
-        if (count == 0)
-        {
-            throw new InvalidOperationException("List is empty.");
-        }
-
-        if (index < 0 || index >= count)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index), "Index out of range.");
-        }
-
-        Node target = GetNodeAt(index);
-
-        // Unlink from the previous node (or move Head if removing the first node)
-        if (target.Prev == null)
-        {
-            Head = target.Next;
-        }
-        else
-        {
-            target.Prev.Next = target.Next;
-        }
-
-        // Unlink from the next node (or move Tail if removing the last node)
-        if (target.Next == null)
-        {
-            Tail = target.Prev;
-        }
-        else
-        {
-            target.Next.Prev = target.Prev;
-        }
-
-        // Clear the removed node's links
-        target.Next = null;
-        target.Prev = null;
-
-        return target.Data;
-    }
-
-    #endregion
-
-    #region Other Methods
-
-    public bool Contains(Book other)
-    {
-        if (other == null)
-        {
-            throw new ArgumentNullException(nameof(other), "Invalid Parameter");
-        }
-
-        for (Node node = Head; node != null; node = node.Next)
-        {
-            if (node.Data.Equals(other)) return true;
-        }
-
-        return false;
-    }
-
-    private Node GetNodeAt(int index)
-    {
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index), "Index cannot be negative.");
-        }
-
-        Node current = Head;
         for (int i = 0; i < index && current != null; i++)
         {
             current = current.Next;
@@ -180,14 +87,12 @@ public class MyLinkedList<T>
 
         if (current == null)
         {
-            throw new ArgumentOutOfRangeException(nameof(index), "Index out of range.");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         return current;
     }
 
-    #endregion
-    
     #region ToString
     
     public override string ToString()
