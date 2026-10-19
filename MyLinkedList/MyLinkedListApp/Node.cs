@@ -1,11 +1,11 @@
 namespace MyLinkedListApp;
 
-public class Node
+public class Node<T>
 {
     #region Properties
 
-    public Node Prev { get; set; }
-    public Node Next { get; set; }
+    public Node<T> Prev { get; set; }
+    public Node<T> Next { get; set; }
     public Book Data { get; }
 
     #endregion

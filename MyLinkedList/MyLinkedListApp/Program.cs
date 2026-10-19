@@ -10,7 +10,7 @@ class Program
 
         // Format per line -> title;author;isbn;publishDate;pages;price;genre
         string path = "books.txt";
-
+       
         using (StreamReader reader = new StreamReader(path))
         {
             while (!reader.EndOfStream)
