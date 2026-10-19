@@ -12,7 +12,7 @@ public class Node<T>
 
     #region Constructors & ToString
 
-    public Node(Book data)
+    public Node(T data)
     {
         if (data == null)
         {

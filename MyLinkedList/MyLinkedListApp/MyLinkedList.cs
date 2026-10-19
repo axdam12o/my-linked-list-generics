@@ -2,12 +2,12 @@ using System.Text;
 
 namespace MyLinkedListApp;
 
-public class MyLinkedList
+public class MyLinkedList<T>
 {
     #region Properties
 
-    private Node Head { get; set; }
-    private Node Tail { get; set; }
+    private Node<T> Head { get; set; }
+    private Node<T> Tail { get; set; }
 
     public int Count
     {
